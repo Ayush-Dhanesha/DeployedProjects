@@ -12,6 +12,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@schematichq/schematic-react": "^latest",
+    "@schematichq/schematic-components": "^latest", 
+    "@schematichq/schematic-typescript-node": "^latest",
+    "@schematichq/schematic-typescript-react": "^latest",
+    "@schematichq/schematic-typescript-utils": "^latest",
     "@clerk/clerk-react": "^5.25.0",
     "@clerk/nextjs": "^6.12.6",
     "@inngest/agent-kit": "^0.9.0",
