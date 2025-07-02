@@ -12,7 +12,7 @@ import { SignUpButton } from "@clerk/nextjs";
 import { SignInButton } from "@clerk/nextjs";
 import { UserButton } from "@clerk/nextjs";
 import { features } from "process";
-import PdfDropZone from "@/components/pdfDropZone";
+import PdfDropZone from "@/components/PdfDropZone";
 import { ArrowRight, ArrowRightCircle, ArrowRightFromLine, BookOpen, Cloud, CloudHail, FolderSync, MapPinnedIcon, ScanText, Server, TrainTrack } from "lucide-react";
 
 export default function Home() {

@@ -10,7 +10,7 @@ import { uploadPDF } from '@/actions/uploadPDF'
 import React, { useRef, useState, useCallback } from 'react'
 import { AlertCircle, CheckCircle, CloudUpload } from 'lucide-react';
 
-function pdfDropZone() {
+function PdfDropZone() {
 
     //
 
@@ -177,4 +177,4 @@ function pdfDropZone() {
   )
 }
 
-export default pdfDropZone
+export default PdfDropZone

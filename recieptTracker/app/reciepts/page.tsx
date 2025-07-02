@@ -3,7 +3,7 @@
 
 import { Component } from 'lucide-react'
 import React from 'react'
-import PdfDropZone from '@/components/pdfDropZone'
+import PdfDropZone from '@/components/PdfDropZone'
 import ReceiptsList from '@/components/RecieptList'
 
 function receipts() {
