@@ -11,156 +11,188 @@ import Link from "next/link";
 import { SignUpButton } from "@clerk/nextjs";
 import { SignInButton } from "@clerk/nextjs";
 import { UserButton } from "@clerk/nextjs";
+import { features } from "process";
+import PdfDropZone from "@/components/pdfDropZone";
+import { ArrowRight, ArrowRightCircle, ArrowRightFromLine, BookOpen, Cloud, CloudHail, FolderSync, MapPinnedIcon, ScanText, Server, TrainTrack } from "lucide-react";
 
 export default function Home() {
   return (
-    <>
-      <header className="sticky top-0 z-10 bg-background p-4 border-b-2 border-slate-200 dark:border-slate-800 flex flex-row justify-between items-center">
-        Convex + Next.js + Clerk
-        <UserButton />
-      </header>
-      <main className="p-8 flex flex-col gap-8">
-        <h1 className="text-4xl font-bold text-center">
-          Convex + Next.js + Clerk
-        </h1>
-        <Authenticated>
-          <Content />
-        </Authenticated>
-        <Unauthenticated>
-          <SignInForm />
-        </Unauthenticated>
-      </main>
-    </>
-  );
-}
+    <div className="flex flex-col min-h-screen">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-b from-blue-100 py-20 md:py-28">
+        <div className="container px-4 md:px-6 mx-auto ">
+          <div className="flex flex-col items-center space-y-4 text-center">
+            <div className="space-y-2">
+              <h1 className="text-3xl md:text-5xl lg:text-6xl sm:text-4xl tracking-tighter font-bold text-gray-900">
+                Intelligent Receipt Management. 
+              </h1>
+              <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                <b>RecieptIO</b> is your ultimate solution for effortless receipt tracking and expense management.
+                Effortlessly track and manage your receipts with <b>RecieptIO</b>, Save time and gain Insight from your expenses.
+              </p>
 
-function SignInForm() {
-  return (
-    <div className="flex flex-col gap-8 w-96 mx-auto">
-      <p>Log in to see the numbers</p>
-      <SignInButton mode="modal">
-        <button className="bg-foreground text-background px-4 py-2 rounded-md">
-          Sign in
-        </button>
-      </SignInButton>
-      <SignUpButton mode="modal">
-        <button className="bg-foreground text-background px-4 py-2 rounded-md">
-          Sign up
-        </button>
-      </SignUpButton>
-    </div>
-  );
-}
+            </div>
 
-function Content() {
-  const { viewer, numbers } =
-    useQuery(api.myFunctions.listNumbers, {
-      count: 10,
-    }) ?? {};
-  const addNumber = useMutation(api.myFunctions.addNumber);
-
-  if (viewer === undefined || numbers === undefined) {
-    return (
-      <div className="mx-auto">
-        <p>loading... (consider a loading skeleton)</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-col gap-8 max-w-lg mx-auto">
-      <p>Welcome {viewer ?? "Anonymous"}!</p>
-      <p>
-        Click the button below and open this page in another window - this data
-        is persisted in the Convex cloud database!
-      </p>
-      <p>
-        <button
-          className="bg-foreground text-background text-sm px-4 py-2 rounded-md"
-          onClick={() => {
-            void addNumber({ value: Math.floor(Math.random() * 10) });
-          }}
-        >
-          Add a random number
-        </button>
-      </p>
-      <p>
-        Numbers:{" "}
-        {numbers?.length === 0
-          ? "Click the button!"
-          : (numbers?.join(", ") ?? "...")}
-      </p>
-      <p>
-        Edit{" "}
-        <code className="text-sm font-bold font-mono bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded-md">
-          convex/myFunctions.ts
-        </code>{" "}
-        to change your backend
-      </p>
-      <p>
-        Edit{" "}
-        <code className="text-sm font-bold font-mono bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded-md">
-          app/page.tsx
-        </code>{" "}
-        to change your frontend
-      </p>
-      <p>
-        See the{" "}
-        <Link href="/server" className="underline hover:no-underline">
-          /server route
-        </Link>{" "}
-        for an example of loading data in a server component
-      </p>
-      <div className="flex flex-col">
-        <p className="text-lg font-bold">Useful resources:</p>
-        <div className="flex gap-2">
-          <div className="flex flex-col gap-2 w-1/2">
-            <ResourceCard
-              title="Convex docs"
-              description="Read comprehensive documentation for all Convex features."
-              href="https://docs.convex.dev/home"
-            />
-            <ResourceCard
-              title="Stack articles"
-              description="Learn about best practices, use cases, and more from a growing
-            collection of articles, videos, and walkthroughs."
-              href="https://www.typescriptlang.org/docs/handbook/2/basic-types.html"
-            />
+            <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+              <Link href="/reciepts" className="w-full sm:w-auto">
+                <button className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                  Get Started <ArrowRight className="inline-block ml-2 w-4 h-4" />
+                </button>
+              </Link>
+              <Link href="/manage-plan" className="w-full sm:w-auto">
+                <button className="px-6 py-3 border bg-border-gray-300 text-white-700 rounded-md hover:bg-gray-200 transition-colors">
+                  View Pricing 😎
+                </button>
+              </Link>
+            </div>
           </div>
-          <div className="flex flex-col gap-2 w-1/2">
-            <ResourceCard
-              title="Templates"
-              description="Browse our collection of templates to get started quickly."
-              href="https://www.convex.dev/templates"
-            />
-            <ResourceCard
-              title="Discord"
-              description="Join our developer community to ask questions, trade tips & tricks,
-            and show off your projects."
-              href="https://www.convex.dev/community"
-            />
+
+        </div>
+        { /* Pdf drop-Zone */}
+        <div className="container mx-auto mt-12">
+          <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:bg-gray-200 transition-colors">
+            <div className="flex flex-col items-center space-y-4">
+              <PdfDropZone />
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+      
+      { /*features*/}
+      <section className="py-20 bg-white bg-gradient-to-b from-blue-100">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            Why Choose RecieptIO?
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+              <ScanText className="w-10 h-10 text-blue-600 mb-4" />
+              <h3 className="text-xl font-semibold mb-4">Smart Receipt Scanning</h3>
+              <p className="text-gray-600">
+                Automatically extract key information from your receipts using advanced OCR technology.
+              </p>
+            </div>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+              <TrainTrack className="w-10 h-10 text-blue-600 mb-4" />
+              <h3 className="text-xl font-semibold mb-4">Expense Tracking</h3>
+              <p className="text-gray-600">
+                Keep track of your expenses effortlessly with categorized reports and insights.
+              </p>
+            </div>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+              <Cloud className="w-10 h-10 text-blue-600 mb-4" />
+              <h3 className="text-xl font-semibold mb-4">Secure Cloud Storage</h3>
+              <p className="text-gray-600">
+                Store your receipts securely in the cloud, accessible anytime, anywhere.
+              </p>
+            </div>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+              <FolderSync className="w-10 h-10 text-blue-600 mb-4" />
+              <h3 className="text-xl font-semibold mb-4">Multi-Device Sync</h3>
+              <p className="text-gray-600">
+                Access your receipts and expenses seamlessly across all your devices.
+              </p>
+            </div>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+              <BookOpen className="w-10 h-10 text-blue-600 mb-4" />
+              <h3 className="text-xl font-semibold mb-4">Intelligent Insights</h3>
+              <p className="text-gray-600">
+                Gain valuable insights into your spending habits with our AI-powered analytics.
+              </p>
+            </div>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+              <Server className="w-10 h-10 text-blue-600 mb-4" />
+              <h3 className="text-xl font-semibold mb-4">24/7 Support</h3>
+              <p className="text-gray-600">
+                Our dedicated support team is here to assist you with any questions or issues.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      { /*Pricing*/}
+      <section className="py-20 bg-gray-50 bg-gradient-to-b from-blue-100">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            Flexible Pricing Plans
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">  
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-2xl font-semibold mb-4">Free Plan</h3>
+              <p className="text-gray-600 mb-4">Perfect for individuals just getting started.</p>
+              <ul className="list-disc list-inside mb-4">
+                <li>Up to 50 receipts per month</li>
+                <li>Basic OCR scanning</li>
+                <li>Cloud storage</li>
+              </ul>
+              <Link href="/manage-plan">
+                <button className="w-full px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                  Choose Free Plan
+                </button>
+              </Link>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-2xl font-semibold mb-4">Jackpot Plan</h3>
+              <p className="text-gray-600 mb-4">Ideal for small businesses and freelancers.</p>
+              <ul className="list-disc list-inside mb-4">
+                <li>Up to 500 receipts per month</li>
+                <li>Advanced OCR scanning</li>
+                <li>Expense tracking and insights</li>
+                <li>Priority support</li>
+              </ul>
+              <Link href="/manage-plan">
+                <button className="w-full px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                  Choose Jackpot Plan
+                </button>
+              </Link>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-2xl font-semibold mb-4">Pro Plan</h3>
+              <p className="text-gray-600 mb-4">Custom solutions for large organizations.</p>
+              <ul className="list-disc list-inside mb-4">
+                <li>Unlimited receipts</li>
+                <li>Custom OCR solutions</li>
+                <li>Advanced analytics and reporting</li>
+                <li>Dedicated account manager</li>
+              </ul>
+              <Link href="/manage-plan">
+                <button className="w-full px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                  Choose pro Plan
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      { /*Info*/}
+      <section className="py-20 bg-white bg-gradient-to-b from-blue-100">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            Get Started with RecieptIO Today!
+          </h2>
+          <div className="flex justify-center space-x-4">
+            <Link href="/receipts" className="w-full sm:w-auto">
+              <button className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                Start Tracking Receipts
+              </button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+
+      { /*Footer*/}
+      <footer className="bg-gray-800 text-white py-6">
+        <div className="container mx-auto px-4 md:px-6 text-center">
+          <p className="text-sm mb-2">&copy; {new Date().getFullYear()} RecieptIO. All rights reserved.</p>
+          <p className="text-sm">Built with ❤️ by the RecieptIO Team</p>
+        </div>
+      </footer>
     </div>
   );
 }
 
-function ResourceCard({
-  title,
-  description,
-  href,
-}: {
-  title: string;
-  description: string;
-  href: string;
-}) {
-  return (
-    <div className="flex flex-col gap-2 bg-slate-200 dark:bg-slate-800 p-4 rounded-md h-28 overflow-auto">
-      <a href={href} className="text-sm underline hover:no-underline">
-        {title}
-      </a>
-      <p className="text-xs">{description}</p>
-    </div>
-  );
-}
+

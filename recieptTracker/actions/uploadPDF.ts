@@ -1,0 +1,64 @@
+'use server'
+
+import { api } from "@/convex/_generated/api";
+import convex from "@/lib/ConvexClients";
+import { currentUser } from "@clerk/nextjs/server"
+import { get } from "http";
+import type { Id } from "@/convex/_generated/dataModel";
+
+async function getFileDownloadUrl(fileId: Id<"_storage">) {
+    return await convex.query(api.reciepts.getrecieptDownloadUrl, { fileId });
+}
+
+export async function uploadPDF(formData: FormData) {
+
+    const user = await currentUser();
+    if (!user) {
+        return { success: false, error: "User not authenticated" };
+    }
+
+    try {
+        const file = formData.get('file') as File;
+
+        if(!file || file.type !== 'application/pdf') {
+            return { success: false, error: "Invalid file type. Please upload a PDF." };
+        }
+
+        const uploadUrl =await convex.mutation(api.reciepts.generateUploadUrl, {}); 
+
+        const arrayBuffer = await file.arrayBuffer();
+        const response = await fetch(uploadUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': file.type,
+            },
+            body:new Uint8Array( arrayBuffer),
+        });
+        if (!response.ok) {
+            throw new Error(`Upload failed with status: ${response.status}`);
+        }
+
+        const {storageId} = await response.json();
+
+        const recieptId = await convex.mutation(api.reciepts.storeReciept, {
+            fileId: storageId,
+            fileName: file.name,
+            userId: user.id,
+            size: file.size,
+            mimType: file.type,
+            uploadedAt: Date.now(),
+        });
+
+        const fileUrl = await getFileDownloadUrl(storageId as Id<"_storage">);
+        return { success: true, recieptId, fileUrl };
+
+        // trigger inngest agent workFlow here
+
+
+        return { success: true, recieptId, __filename:file.name };
+
+    }catch (error) {
+        console.error("File upload error:", error);
+        return { success: false, error: "File upload failed. Please try again." };
+    }
+}
