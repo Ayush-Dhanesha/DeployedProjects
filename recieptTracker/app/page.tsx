@@ -174,7 +174,7 @@ export default function Home() {
             Get Started with RecieptIO Today!
           </h2>
           <div className="flex justify-center space-x-4">
-            <Link href="/receipts" className="w-full sm:w-auto">
+            <Link href="/reciepts" className="w-full sm:w-auto">
               <button className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
                 Start Tracking Receipts
               </button>

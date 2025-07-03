@@ -5,6 +5,9 @@ import convex from "@/lib/ConvexClients";
 import { currentUser } from "@clerk/nextjs/server"
 import { get } from "http";
 import type { Id } from "@/convex/_generated/dataModel";
+import { inngest } from "@/inngest/client";
+import Events from "@/inngest/constants";
+import { url } from "inspector";
 
 async function getFileDownloadUrl(fileId: Id<"_storage">) {
     return await convex.query(api.reciepts.getrecieptDownloadUrl, { fileId });
@@ -49,13 +52,18 @@ export async function uploadPDF(formData: FormData) {
             uploadedAt: Date.now(),
         });
 
-        const fileUrl = await getFileDownloadUrl(storageId as Id<"_storage">);
-        return { success: true, recieptId, fileUrl };
+        const fileUrl = await getFileDownloadUrl(storageId);
 
         // trigger inngest agent workFlow here
+        await inngest.send({
+            name: Events.EXTRACT_DATA_FROM_PDF_AND_SAVE_TO_DATABASE,
+            data: {
+                url: fileUrl,
+                recieptId,
+            },
+        });
 
-
-        return { success: true, recieptId, __filename:file.name };
+        return { success: true, data: { recieptId, fileName: file.name } };
 
     }catch (error) {
         console.error("File upload error:", error);

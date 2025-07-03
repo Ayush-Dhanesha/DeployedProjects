@@ -23,6 +23,7 @@ export default defineSchema({
     transactionDate: v.optional(v.number()), // Timestamp of the transaction
     transactionAmount: v.optional(v.number()), // Amount of the transaction
     transactionCurrency: v.optional(v.string()), // Currency of the transaction, e.g., "USD", "EUR"
+    recieptSummary: v.optional(v.string()), // Human-readable summary of the reciept
     // Array of items in the receipt
 
 

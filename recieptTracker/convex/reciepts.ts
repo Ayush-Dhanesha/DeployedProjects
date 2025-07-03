@@ -93,7 +93,7 @@ export const updateReciept = mutation({
     }
 });
 
-const deleteReciept = mutation({
+export const deleteReciept = mutation({
     args: {
         recieptId: v.id("reciepts"),
     },
@@ -103,8 +103,13 @@ const deleteReciept = mutation({
             throw new Error("Reciept not found");
         }
 
-        // Delete the file from storage
-        await ctx.storage.delete(reciept.fileId);
+        // Try to delete the file from storage, but don't fail if it doesn't exist
+        try {
+            await ctx.storage.delete(reciept.fileId);
+        } catch (error) {
+            // Log the error but continue with deletion - the file might already be deleted
+            console.warn(`Failed to delete file ${reciept.fileId} from storage:`, error);
+        }
 
         // Delete the reciept from the database
         await ctx.db.delete(args.recieptId);
