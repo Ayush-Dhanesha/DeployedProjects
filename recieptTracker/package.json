@@ -15,8 +15,6 @@
     "@schematichq/schematic-react": "^1.0.0",
     "@schematichq/schematic-components": "^1.0.0",
     "@schematichq/schematic-typescript-node": "^1.0.0",
-    "@schematichq/schematic-typescript-react": "^1.0.0",
-    "@schematichq/schematic-typescript-utils": "^1.0.0",
     "@clerk/clerk-react": "^5.25.0",
     "@clerk/nextjs": "^6.12.6",
     "@inngest/agent-kit": "^0.9.0",
