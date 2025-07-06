@@ -202,7 +202,7 @@ export default function AIInsights({ receiptId, receiptData }: AIInsightsProps) 
         <p className="text-sm text-gray-500">Please sign in to access AI insights</p>
         <Button 
           variant="outline" 
-          onClick={() => window.location.href = '/sign-in?redirect_url=' + encodeURIComponent(window.location.pathname)}
+          onClick={() => window.location.href = 'https://wise-whale-35.accounts.dev/sign-in?redirect_url=' + encodeURIComponent(window.location.href)}
         >
           Sign In
         </Button>

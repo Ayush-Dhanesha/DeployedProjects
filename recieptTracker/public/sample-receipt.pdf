@@ -1,0 +1,224 @@
+%PDF-1.4
+1 0 obj
+<<
+/Title (Sample Receipt)
+/Creator (Receipt Generator)
+/Producer (Sample PDF Receipt)
+/CreationDate (D:20250706102300)
+>>
+endobj
+2 0 obj
+<<
+/Type /Catalog
+/Pages 3 0 R
+>>
+endobj
+3 0 obj
+<<
+/Type /Pages
+/Kids [4 0 R]
+/Count 1
+>>
+endobj
+4 0 obj
+<<
+/Type /Page
+/Parent 3 0 R
+/MediaBox [0 0 226 600]
+/Contents 5 0 R
+/Resources <<
+  /Font <<
+    /F1 6 0 R
+    /F2 7 0 R
+  >>
+>>
+>>
+endobj
+5 0 obj
+<< /Length 2364 >>
+stream
+BT
+/F2 12 Tf
+68 570 Td
+(GROCERY MART) Tj
+ET
+
+BT
+/F1 8 Tf
+45 550 Td
+(123 Market Street, Anytown, ST 12345) Tj
+ET
+
+BT
+/F1 8 Tf
+65 540 Td
+(Tel: (555) 123-4567) Tj
+ET
+
+BT
+/F1 8 Tf
+20 520 Td
+(Receipt #: R-12345678) Tj
+ET
+
+BT
+/F1 8 Tf
+20 510 Td
+(Date: 07/06/2025 10:23 AM) Tj
+ET
+
+BT
+/F1 8 Tf
+20 500 Td
+(Cashier: John D.) Tj
+ET
+
+BT
+/F1 8 Tf
+20 480 Td
+(Item                    Qty   Unit    Price) Tj
+ET
+
+BT
+/F1 8 Tf
+20 470 Td
+(----------------------------------------) Tj
+ET
+
+BT
+/F1 7 Tf
+20 455 Td
+(Organic Milk            2     $3.99   $7.98) Tj
+ET
+
+BT
+/F1 7 Tf
+20 445 Td
+(Whole Grain Bread       1     $4.49   $4.49) Tj
+ET
+
+BT
+/F1 7 Tf
+20 435 Td
+(Fresh Apples            5     $0.79   $3.95) Tj
+ET
+
+BT
+/F1 7 Tf
+20 425 Td
+(Chicken Breast          1    $12.99  $12.99) Tj
+ET
+
+BT
+/F1 7 Tf
+20 415 Td
+(Pasta                   2     $1.99   $3.98) Tj
+ET
+
+BT
+/F1 7 Tf
+20 405 Td
+(Tomato Sauce            3     $2.29   $6.87) Tj
+ET
+
+BT
+/F1 7 Tf
+20 395 Td
+(Eggs (dozen)            1     $5.49   $5.49) Tj
+ET
+
+BT
+/F1 7 Tf
+20 385 Td
+(Fresh Spinach           1     $3.99   $3.99) Tj
+ET
+
+BT
+/F1 8 Tf
+20 365 Td
+(----------------------------------------) Tj
+ET
+
+BT
+/F1 8 Tf
+130 350 Td
+(Subtotal: $49.74) Tj
+ET
+
+BT
+/F1 8 Tf
+130 340 Td
+(Tax (8.5%): $4.23) Tj
+ET
+
+BT
+/F2 9 Tf
+130 325 Td
+(TOTAL: $53.97) Tj
+ET
+
+BT
+/F1 8 Tf
+110 310 Td
+(Payment Method: Credit Card) Tj
+ET
+
+BT
+/F1 8 Tf
+125 300 Td
+(Card: VISA ****1234) Tj
+ET
+
+BT
+/F1 6 Tf
+70 250 Td
+(Thank you for shopping with us!) Tj
+ET
+
+BT
+/F1 6 Tf
+40 230 Td
+(Return policy: 14 days with receipt) Tj
+ET
+
+BT
+/F1 6 Tf
+40 220 Td
+(for refund or exchange.) Tj
+ET
+
+endstream
+endobj
+6 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Courier
+>>
+endobj
+7 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Courier-Bold
+>>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000009 00000 n 
+0000000126 00000 n 
+0000000175 00000 n 
+0000000232 00000 n 
+0000000377 00000 n 
+0000002794 00000 n 
+0000002861 00000 n 
+trailer
+<<
+/Size 8
+/Root 2 0 R
+/Info 1 0 R
+>>
+startxref
+2931
+%%EOF

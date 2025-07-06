@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Receipt</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            width: 80mm;
+            margin: 0 auto;
+            padding: 5mm;
+        }
+        .receipt {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 1px dashed #000;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .info {
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .items {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .items th, .items td {
+            text-align: left;
+            padding: 3px 0;
+            font-size: 12px;
+        }
+        .items .price {
+            text-align: right;
+        }
+        .total {
+            border-top: 1px dashed #000;
+            margin-top: 10px;
+            padding-top: 10px;
+            text-align: right;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 10px;
+        }
+        .barcode {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt">
+        <div class="header">
+            <h2>GROCERY MART</h2>
+            <p>123 Market Street<br>Anytown, ST 12345<br>Tel: (555) 123-4567</p>
+        </div>
+        <div class="info">
+            <p>Receipt #: R-12345678</p>
+            <p>Date: 07/06/2025 10:23 AM</p>
+            <p>Cashier: John D.</p>
+        </div>
+        <table class="items">
+            <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Unit</th>
+                <th class="price">Price</th>
+            </tr>
+            <tr>
+                <td>Organic Milk</td>
+                <td>2</td>
+                <td>$3.99</td>
+                <td class="price">$7.98</td>
+            </tr>
+            <tr>
+                <td>Whole Grain Bread</td>
+                <td>1</td>
+                <td>$4.49</td>
+                <td class="price">$4.49</td>
+            </tr>
+            <tr>
+                <td>Fresh Apples</td>
+                <td>5</td>
+                <td>$0.79</td>
+                <td class="price">$3.95</td>
+            </tr>
+            <tr>
+                <td>Chicken Breast</td>
+                <td>1</td>
+                <td>$12.99</td>
+                <td class="price">$12.99</td>
+            </tr>
+            <tr>
+                <td>Pasta</td>
+                <td>2</td>
+                <td>$1.99</td>
+                <td class="price">$3.98</td>
+            </tr>
+            <tr>
+                <td>Tomato Sauce</td>
+                <td>3</td>
+                <td>$2.29</td>
+                <td class="price">$6.87</td>
+            </tr>
+            <tr>
+                <td>Eggs (dozen)</td>
+                <td>1</td>
+                <td>$5.49</td>
+                <td class="price">$5.49</td>
+            </tr>
+            <tr>
+                <td>Fresh Spinach</td>
+                <td>1</td>
+                <td>$3.99</td>
+                <td class="price">$3.99</td>
+            </tr>
+        </table>
+        <div class="total">
+            <p>Subtotal: $49.74</p>
+            <p>Tax (8.5%): $4.23</p>
+            <p><strong>TOTAL: $53.97</strong></p>
+            <p>Payment Method: Credit Card</p>
+            <p>Card: VISA ****1234</p>
+        </div>
+        <div class="barcode">
+            ||||||||||||||||||||||||||||||
+            <p>Thank you for shopping with us!</p>
+        </div>
+        <div class="footer">
+            <p>Return policy: 14 days with receipt for refund or exchange.<br>
+            Some items may be non-returnable. See store for details.</p>
+        </div>
+    </div>
+</body>
+</html>

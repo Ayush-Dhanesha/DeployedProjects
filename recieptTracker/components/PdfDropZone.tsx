@@ -45,7 +45,8 @@ function PdfDropZone() {
     const handleUploadFiles = useCallback(async (files: FileList) => {
         if(!user) {
             alert('You must be signed in to upload files.');
-            router.push('/sign-in');
+            // Redirect to Clerk sign-in page with the current URL as the redirect_url
+            window.location.href = 'https://wise-whale-35.accounts.dev/sign-in?redirect_url=' + encodeURIComponent(window.location.href);
             return;
         }
 
@@ -108,7 +109,8 @@ function PdfDropZone() {
         
         if(!user){
             alert('You must be signed in to upload files.');
-            router.push('/sign-in');
+            // Redirect to Clerk sign-in page with the current URL as the redirect_url
+            window.location.href = 'https://wise-whale-35.accounts.dev/sign-in?redirect_url=' + encodeURIComponent(window.location.href);
             return;
         }
 
@@ -138,7 +140,7 @@ function PdfDropZone() {
               </div>
             ) : !isUserSignedIn ? (
               <div className='text-gray-500'>
-                Please <a href='/sign-in' className='text-blue-500 hover:underline'>sign in</a> to upload files.
+                Please <a href={'https://wise-whale-35.accounts.dev/sign-in?redirect_url=' + encodeURIComponent(window.location.href)} className='text-blue-500 hover:underline'>sign in</a> to upload files.
               </div>
             ) : (
               <>
