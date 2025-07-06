@@ -159,4 +159,92 @@ export const updateRecieptwithExtractedData = mutation({
     }
 });
 
+// AI Usage Tracking Functions
+
+export const getAiUsage = query({
+  args: { userId: v.string(), feature: v.string() },
+  handler: async (ctx, args) => {
+    const usage = await ctx.db
+      .query("aiUsage")
+      .withIndex("by_user_feature", (q) => 
+        q.eq("userId", args.userId).eq("feature", args.feature)
+      )
+      .first();
+    
+    return usage || { usageCount: 0, planType: "free" };
+  },
+});
+
+export const incrementAiUsage = mutation({
+  args: { 
+    userId: v.string(), 
+    feature: v.string(),
+    planType: v.optional(v.string())
+  },
+  handler: async (ctx, args) => {
+    const existing = await ctx.db
+      .query("aiUsage")
+      .withIndex("by_user_feature", (q) => 
+        q.eq("userId", args.userId).eq("feature", args.feature)
+      )
+      .first();
+
+    if (existing) {
+      await ctx.db.patch(existing._id, {
+        usageCount: existing.usageCount + 1,
+        lastUsed: Date.now(),
+      });
+      return existing.usageCount + 1;
+    } else {
+      await ctx.db.insert("aiUsage", {
+        userId: args.userId,
+        feature: args.feature,
+        usageCount: 1,
+        lastUsed: Date.now(),
+        planType: args.planType || "free",
+      });
+      return 1;
+    }
+  },
+});
+
+export const checkAiUsageLimit = query({
+  args: { userId: v.string(), feature: v.string() },
+  handler: async (ctx, args) => {
+    const usage = await ctx.db
+      .query("aiUsage")
+      .withIndex("by_user_feature", (q) => 
+        q.eq("userId", args.userId).eq("feature", args.feature)
+      )
+      .first();
+
+    const currentUsage = usage?.usageCount || 0;
+    const planType = usage?.planType || "free";
+    
+    // Define limits per plan
+    const limits = {
+      free: {
+        receipt_summary: 3,
+        receipt_scan: 3,
+      },
+      premium: {
+        receipt_summary: -1, // unlimited
+        receipt_scan: -1, // unlimited
+      }
+    };
+
+    const limit = limits[planType as keyof typeof limits]?.[args.feature as keyof typeof limits.free] || 0;
+    const hasAccess = planType === "premium" || currentUsage < limit;
+    const remaining = planType === "premium" ? -1 : Math.max(0, limit - currentUsage);
+
+    return {
+      hasAccess,
+      currentUsage,
+      limit,
+      remaining,
+      planType,
+    };
+  },
+});
+
 

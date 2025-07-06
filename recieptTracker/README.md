@@ -48,8 +48,8 @@ RecieptIO is a modern, full-stack web application that revolutionizes receipt ma
 
 ### AI & Processing
 - **[Inngest](https://www.inngest.com/)** - Reliable background job processing
-- **[Anthropic Claude](https://www.anthropic.com/)** - Advanced AI for document analysis
-- **[OpenAI GPT-4](https://openai.com/)** - Intelligent data extraction
+- **[Google Gemini](https://ai.google.dev/)** - Advanced AI for document analysis and receipt insights
+- **Direct API Integration** - Fault-tolerant AI processing
 - **Agent-Kit Integration** - Multi-agent AI workflows
 
 ### Authentication & Billing
@@ -102,8 +102,8 @@ SCHEMATIC_API_KEY=your_schematic_api_key
 NEXT_PUBLIC_SCHEMATIC_CUSTOMEER_PORTAL_COMPONENT_ID=your_component_id
 
 # AI Service Keys
-ANTHROPIC_API_KEY=your_anthropic_api_key
-OPENAI_API_KEY=your_openai_api_key
+GOOGLE_API_KEY=your_google_gemini_api_key
+GEMINI_API_KEY=your_google_gemini_api_key
 
 # Inngest
 INNGEST_EVENT_KEY=your_inngest_event_key
@@ -213,6 +213,15 @@ reciepts: {
 6. **Summary Generation**: AI creates human-readable summary
 7. **Status Update**: Real-time notification to user
 
+### AI Analysis Workflow
+1. **User Request**: User requests AI insights on receipt
+2. **Status Update**: Receipt status updated to "processing"
+3. **Primary Path**: Direct API call to Google Gemini for analysis
+4. **Fallback Path**: Inngest-based processing if primary fails
+5. **Data Analysis**: AI extracts insights, categorizes items, and provides recommendations
+6. **Status Completion**: Receipt status updated to "completed"
+7. **UI Update**: Real-time display of analysis results
+
 ### Feature Entitlements
 - **Free Plan**: 50 receipts/month, basic OCR
 - **Jackpot Plan**: 500 receipts/month, advanced features, priority support
@@ -270,6 +279,9 @@ npx tsc --noEmit
 
 ### Key Endpoints
 - `POST /api/inngest` - Webhook for background processing
+- `POST /api/direct-ai-analysis` - Fault-tolerant AI analysis endpoint
+- `POST /api/generate-ai-insights` - AI insights generation
+- `GET /api/check-receipt-status` - Receipt status check endpoint
 - Convex mutations and queries handled through the client
 
 ### Convex Functions
@@ -309,9 +321,10 @@ npx tsc --noEmit
 - Verify network connectivity
 
 **AI Processing Issues**
-- Validate API keys for Anthropic/OpenAI
+- Validate API keys for Google Gemini API
 - Check Inngest webhook configuration
 - Monitor background job status
+- Try the direct AI analysis endpoint if Inngest is failing
 
 ## 📞 Support
 
@@ -329,7 +342,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Convex** for the amazing real-time backend
 - **Clerk** for seamless authentication
 - **Inngest** for reliable background processing
-- **Anthropic** and **OpenAI** for AI capabilities
+- **Google Gemini** for powerful AI capabilities
 - **Schematic** for feature management
 - The amazing open-source community
 

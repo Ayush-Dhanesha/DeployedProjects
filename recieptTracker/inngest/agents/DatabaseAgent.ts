@@ -1,4 +1,4 @@
-import { createAgent, createTool, openai } from "@inngest/agent-kit";
+import { createAgent, createTool, gemini } from "@inngest/agent-kit";
 import {z} from "zod";
 import { Context } from "inngest";
 import convex  from "@/lib/ConvexClients";
@@ -119,11 +119,9 @@ export const databaseAgent = createAgent({
     name: "Database Agent",
     description: "An agent to handle database operations and CRUD tasks in convex database.",
     system :`You are a Database Agent. Your task is to handle database operations and CRUD tasks in the convex database. You will receive input data that contains the necessary information for the operations. Ensure that you perform the operations correctly and return the results in a structured format.`,
-    model : openai({
-        model: 'gpt-4o-mini',
-        defaultParameters: {
-            max_completion_tokens: 2000,
-        },
+    model : gemini({
+        model: 'gemini-1.5-pro',
+        apiKey: process.env.GOOGLE_API_KEY,
     }),
     tools: [saveToDatabaseTool],
 

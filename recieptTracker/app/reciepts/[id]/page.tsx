@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { ArrowLeftIcon, DownloadCloud, InboxIcon, Info, List, Trash2, CheckCircle, XCircle } from 'lucide-react';
 import { useSchematicEntitlement } from '@schematichq/schematic-react';
 import { useMutation } from 'convex/react';
+import AIInsights from '@/components/AIInsights';
 
 function Reciept() {
     const params = useParams <{id: string}>();
@@ -162,6 +163,23 @@ function Reciept() {
                         )}
                     </div>
                 </div>
+
+                {/* AI Insights Section - New enhanced component */}
+                <div className="w-full mt-6">
+                    <AIInsights 
+                        receiptId={recieptId || ""}
+                        receiptData={{
+                            merchantName: reciept?.merchantName || "Unknown Merchant",
+                            transactionAmount: reciept?.transactionAmount || 0,
+                            items: reciept?.items?.map(item => ({
+                                itemName: item.itemName || "Unknown Item",
+                                quantity: item.quantity || 1,
+                                unitPrice: item.unitPrice || 0
+                            })) || []
+                        }}
+                    />
+                </div>
+
                 {/* Delete Confirmation Modal */}
                 {showDeleteConfirm && (
                     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40">

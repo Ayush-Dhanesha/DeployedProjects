@@ -60,6 +60,7 @@ export async function uploadPDF(formData: FormData) {
             data: {
                 url: fileUrl,
                 recieptId,
+                userId: user.id, // Pass user ID for plan checking
             },
         });
 

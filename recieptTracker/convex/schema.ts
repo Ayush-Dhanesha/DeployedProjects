@@ -35,4 +35,13 @@ export default defineSchema({
    }),
   ),
   }),
+  
+  // New table for tracking AI usage
+  aiUsage: defineTable({
+    userId: v.string(),
+    feature: v.string(), // "receipt_summary", "receipt_scan", etc.
+    usageCount: v.number(),
+    lastUsed: v.number(), // timestamp
+    planType: v.string(), // "free", "premium", etc.
+  }).index("by_user_feature", ["userId", "feature"]),
 });
