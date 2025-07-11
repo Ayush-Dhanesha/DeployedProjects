@@ -22,7 +22,7 @@ export default function AIInsights({ receiptId, receiptData }: AIInsightsProps) 
   const { user } = useUser();
   const [isGenerating, setIsGenerating] = useState(false);
   const [insights, setInsights] = useState<any>(null);
-  const [triesRemaining, setTriesRemaining] = useState(3); // Free trial tries
+  const [triesRemaining, setTriesRemaining] = useState(5); // Free trial tries
   const [hasUsedTrial, setHasUsedTrial] = useState(false);
   const [statusCheckInterval, setStatusCheckInterval] = useState<NodeJS.Timeout | null>(null);
 
@@ -34,6 +34,13 @@ export default function AIInsights({ receiptId, receiptData }: AIInsightsProps) 
         const { used, remaining } = JSON.parse(trialData);
         setHasUsedTrial(used > 0);
         setTriesRemaining(remaining);
+      } else {
+        // Initialize new user with 5 free trials
+        setTriesRemaining(5);
+        localStorage.setItem(`aiInsightsTrial_${user.id}`, JSON.stringify({
+          used: 0,
+          remaining: 5
+        }));
       }
     }
     
@@ -49,7 +56,7 @@ export default function AIInsights({ receiptId, receiptData }: AIInsightsProps) 
     if (user && triesRemaining > 0) {
       const newRemaining = triesRemaining - 1;
       localStorage.setItem(`aiInsightsTrial_${user.id}`, JSON.stringify({
-        used: hasUsedTrial ? 3 - newRemaining : 1,
+        used: hasUsedTrial ? 5 - newRemaining : 1,
         remaining: newRemaining
       }));
       setTriesRemaining(newRemaining);

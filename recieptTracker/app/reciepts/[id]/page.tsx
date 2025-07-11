@@ -74,16 +74,17 @@ function Reciept() {
                     </Link>
                 </nav>
                 <div className='bg-white shadow-md rounded-lg p-6'>
-                    <div className='flex justify-between items-center mb-4'>
+                    <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-4'>
                         <div className='flex-1'>
-                                <h2 className='text-2xl font-bold'>{reciept?.fileDisplayName || reciept?.fileName}</h2>
+                                <h2 className='text-xl sm:text-2xl font-bold'>{reciept?.fileDisplayName || reciept?.fileName}</h2>
                             <p className='text-gray-500'>{uploadDate}</p>
                         </div>
                         <button
                             onClick={() => setShowDeleteConfirm(true)}
-                            className="flex items-center px-4 py-2 bg-red-600 text-white rounded hover:bg-red-800 transition-colors shadow-md"
+                            className="flex items-center justify-center px-3 py-2 sm:px-4 sm:py-2 bg-red-600 text-white rounded hover:bg-red-800 transition-colors shadow-md text-sm sm:text-base w-full sm:w-auto"
                         >
-                            <Trash2 className="w-5 h-5 mr-2" /> Delete Receipt
+                            <Trash2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" /> 
+                            <span className="sm:inline">Delete Receipt</span>
                         </button>
                     </div>
                     <div className='flex items-center '>
@@ -182,12 +183,12 @@ function Reciept() {
 
                 {/* Delete Confirmation Modal */}
                 {showDeleteConfirm && (
-                    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40">
-                        <div className="bg-white rounded-lg shadow-xl p-8 max-w-sm w-full flex flex-col items-center">
-                            <XCircle className="w-12 h-12 text-red-500 mb-4" />
-                            <h4 className="text-lg font-bold mb-2">Are you sure you want to delete this receipt?</h4>
-                            <p className="text-gray-600 mb-6 text-center">This action cannot be undone.</p>
-                            <div className="flex space-x-4">
+                    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40 p-4">
+                        <div className="bg-white rounded-lg shadow-xl p-6 sm:p-8 max-w-sm w-full flex flex-col items-center">
+                            <XCircle className="w-10 h-10 sm:w-12 sm:h-12 text-red-500 mb-4" />
+                            <h4 className="text-lg font-bold mb-2 text-center">Are you sure you want to delete this receipt?</h4>
+                            <p className="text-gray-600 mb-6 text-center text-sm sm:text-base">This action cannot be undone.</p>
+                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
                                 <button
                                     onClick={async () => {
                                         setDeleteError("");
@@ -203,19 +204,19 @@ function Reciept() {
                                             setDeleteError("Failed to delete receipt. Please try again.");
                                         }
                                     }}
-                                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors flex items-center"
+                                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors flex items-center justify-center text-sm sm:text-base"
                                 >
                                     <Trash2 className="w-4 h-4 mr-1" /> Yes, Delete
                                 </button>
                                 <button
                                     onClick={() => setShowDeleteConfirm(false)}
-                                    className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors"
+                                    className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors text-sm sm:text-base"
                                 >
                                     Cancel
                                 </button>
                             </div>
                             {deleteSuccess && (
-                                <div className="flex items-center text-green-600 mt-4"><CheckCircle className="w-5 h-5 mr-1" /> Receipt deleted!</div>
+                                <div className="flex items-center text-green-600 mt-4 text-sm sm:text-base"><CheckCircle className="w-5 h-5 mr-1" /> Receipt deleted!</div>
                             )}
                             {deleteError && (
                                 <div className="flex items-center text-red-600 mt-4"><XCircle className="w-5 h-5 mr-1" /> {deleteError}</div>

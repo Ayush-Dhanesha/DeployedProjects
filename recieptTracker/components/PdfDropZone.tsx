@@ -7,7 +7,7 @@ import { useSchematicEntitlement } from '@schematichq/schematic-react'
 import { uploadPDF } from '@/actions/uploadPDF'
 
 
-import React, { useRef, useState, useCallback } from 'react'
+import React, { useRef, useState, useCallback, useEffect } from 'react'
 import { AlertCircle, CheckCircle, CloudUpload } from 'lucide-react';
 
 function PdfDropZone() {
@@ -20,6 +20,7 @@ function PdfDropZone() {
     const [isDraggingOver, setIsDraggingOver] = useState(false);
     const [uploadedFiles, setUploadedFiles] = useState<String[]>([]);
     const [isUploading, setIsUploading] = useState(false);
+    const [currentUrl, setCurrentUrl] = useState('');
 
     const {user} =useUser();
     // Check if the user is authenticated
@@ -28,6 +29,14 @@ function PdfDropZone() {
         value: isFeatureEnabled,featureUsageExceeded,featureAllocation
     } = useSchematicEntitlement("scans");
     const fileInputRef = React.useRef<HTMLInputElement>(null);
+    
+    // Set current URL on client side only
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setCurrentUrl(window.location.href);
+        }
+    }, []);
+    
     //Setup the DnD sensors for drag and drop functionality
 
 
@@ -46,7 +55,9 @@ function PdfDropZone() {
         if(!user) {
             alert('You must be signed in to upload files.');
             // Redirect to Clerk sign-in page with the current URL as the redirect_url
-            window.location.href = 'https://wise-whale-35.accounts.dev/sign-in?redirect_url=' + encodeURIComponent(window.location.href);
+            if (typeof window !== 'undefined') {
+                window.location.href = 'https://wise-whale-35.accounts.dev/sign-in?redirect_url=' + encodeURIComponent(currentUrl || window.location.href);
+            }
             return;
         }
 
@@ -89,7 +100,7 @@ function PdfDropZone() {
             setIsUploading(false);
         }
     
-    },[user, router]);
+    },[user, router, currentUrl]);
     const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         if(e.target.files && e.target.files.length > 0) {
             handleUploadFiles(e.target.files);
@@ -110,7 +121,9 @@ function PdfDropZone() {
         if(!user){
             alert('You must be signed in to upload files.');
             // Redirect to Clerk sign-in page with the current URL as the redirect_url
-            window.location.href = 'https://wise-whale-35.accounts.dev/sign-in?redirect_url=' + encodeURIComponent(window.location.href);
+            if (typeof window !== 'undefined') {
+                window.location.href = 'https://wise-whale-35.accounts.dev/sign-in?redirect_url=' + encodeURIComponent(currentUrl || window.location.href);
+            }
             return;
         }
 
@@ -118,9 +131,10 @@ function PdfDropZone() {
             handleUploadFiles(e.dataTransfer.files);
             e.dataTransfer.clearData();
         }
-    }, [user , handleUploadFiles]);
+    }, [user , handleUploadFiles, currentUrl]);
     const isUserSignedIn = !!user;
-    const canUpload = isUserSignedIn && isFeatureEnabled // Replace with your logic to enable/disable upload
+    // Allow uploads for all signed-in users - backend will handle usage limits
+    const canUpload = isUserSignedIn;
     // Define the drop zone component
 
   return (
@@ -140,7 +154,7 @@ function PdfDropZone() {
               </div>
             ) : !isUserSignedIn ? (
               <div className='text-gray-500'>
-                Please <a href={'https://wise-whale-35.accounts.dev/sign-in?redirect_url=' + encodeURIComponent(window.location.href)} className='text-blue-500 hover:underline'>sign in</a> to upload files.
+                Please <a href={'https://wise-whale-35.accounts.dev/sign-in?redirect_url=' + encodeURIComponent(currentUrl)} className='text-blue-500 hover:underline'>sign in</a> to upload files.
               </div>
             ) : (
               <>
@@ -159,7 +173,7 @@ function PdfDropZone() {
                   className='px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors'
                   disabled={!canUpload}
                 >
-                  {canUpload ? 'Select Files' : 'Upgrade to Upload'}
+                  {canUpload ? 'Select Files' : 'Sign In to Upload'}
                 </button>
               </>
             )}

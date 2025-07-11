@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "@/convex/_generated/api";
+import { PlanLimiter } from '@/lib/PlanLimiter';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,6 +17,20 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Check usage limits
+    const plan = await PlanLimiter.getUserPlan(userId);
+    const usageCheck = await PlanLimiter.checkUsageLimit(userId, 'ai-insights', plan);
+    
+    if (!usageCheck.allowed) {
+      return NextResponse.json(
+        { error: 'Usage limit exceeded', usageCheck },
+        { status: 403 }
+      );
+    }
+
+    // Increment usage
+    await PlanLimiter.incrementUsage(userId, 'ai-insights');
 
     // Use Gemini to generate AI insights
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });

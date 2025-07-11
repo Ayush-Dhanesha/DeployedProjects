@@ -14,17 +14,20 @@ export interface UsageTracker {
 export class PlanLimiter {
   private static LIMITS = {
     free: {
-      'ai-scans': 5,
+      'receipt_scan': 5,
+      'receipt_summary': 5,
       'ai-insights': 5,
       'monthly-uploads': 10
     },
     pro: {
-      'ai-scans': 100,
+      'receipt_scan': 100,
+      'receipt_summary': 100,
       'ai-insights': 100, 
       'monthly-uploads': 1000
     },
     enterprise: {
-      'ai-scans': -1, // unlimited
+      'receipt_scan': -1, // unlimited
+      'receipt_summary': -1, // unlimited
       'ai-insights': -1,
       'monthly-uploads': -1
     }
@@ -48,6 +51,8 @@ export class PlanLimiter {
       
       const current = usage?.currentUsage || 0;
       
+      console.log(`Usage check for user ${userId}, feature ${feature}: current=${current}, limit=${limit}, plan=${plan}`);
+      
       return {
         allowed: limit === -1 || current < limit,
         current,
@@ -58,7 +63,7 @@ export class PlanLimiter {
       console.error(`Error checking usage limit for user ${userId}, feature ${feature}:`, error);
       
       // Fallback to default values if the database query fails
-      const limit = this.LIMITS[plan][feature as keyof typeof this.LIMITS[typeof plan]] || 0;
+      const limit = this.LIMITS[plan][feature as keyof typeof this.LIMITS[typeof plan]] || 5; // Default to 5 for free users
       return {
         allowed: true, // Allow usage by default in case of errors
         current: 0,

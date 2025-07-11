@@ -179,7 +179,7 @@ ${usageData.planType === 'free' ? `\n🔓 **Free Trial**: ${usageData.remaining 
               >
                 <Sparkles className="h-4 w-4 mr-2" />
                 Try Free AI Summary
-                {usageData.planType === 'free' && ` (${usageData.remaining} of 3 free)`}
+                {usageData.planType === 'free' && ` (${usageData.remaining} of 5 free)`}
               </Button>
             </div>
           )}

@@ -49,40 +49,71 @@ function ReceiptsList() {
         );
     }
   return (
-    <div className='w-full max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md'>
-        <h2 className='text-2xl font-semibold mb-4'>Your Receipts</h2>
+    <div className='w-full max-w-3xl mx-auto p-4 sm:p-6 bg-white rounded-lg shadow-md'>
+        <h2 className='text-xl sm:text-2xl font-semibold mb-4'>Your Receipts</h2>
         <div className='bg-white border border-gray-200 rounded-lg overflow-hidden'>
-            <Table>
-                <TableCaption>Your uploaded receipts</TableCaption>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead className='w-[40px]'></TableHead>
-                        <TableHead>File Name</TableHead>
-                        <TableHead>Date</TableHead>
-                        <TableHead>Size</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead className='w-[40px]'></TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {reciepts.map((receipt) => (
-                        <TableRow key={receipt._id} className='hover:bg-gray-50 transition-colors cursor-pointer' onClick={()=> router.push(`/reciepts/${receipt._id}`)}>
-                            <TableCell> <FileTextIcon className='h-6 w-6 text-red-500'/></TableCell>
-                            <TableCell className='font-medium'>{receipt.fileName}</TableCell>
-                            <TableCell>{new Date(receipt.uploadedAt).toLocaleDateString()}</TableCell>
-                            <TableCell>{(receipt.size / 1024).toFixed(2)} KB</TableCell>    
-                            <TableCell>
-                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${receipt.status === "completed" ? "bg-green-100 text-green-800" : receipt.status === "processing" ? "bg-yellow-100 text-yellow-800" : "bg-red-100 text-red-800"}`}>
-                                    {(receipt.status?.charAt(0)?.toLocaleUpperCase() ?? "") + (receipt.status?.slice(1) ?? "")}
-                                </span>
-                            </TableCell>
-                            <TableCell>
-                                <ChevronRight className='h-5 w-5 text-gray-400 mx-auto' />
-                            </TableCell>
+            {/* Mobile view - Cards */}
+            <div className="sm:hidden space-y-3 p-4">
+                {reciepts.map((receipt) => (
+                    <div 
+                        key={receipt._id} 
+                        className='border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors cursor-pointer'
+                        onClick={() => router.push(`/reciepts/${receipt._id}`)}
+                    >
+                        <div className="flex items-start justify-between mb-3">
+                            <div className="flex items-center gap-3">
+                                <FileTextIcon className='h-6 w-6 text-red-500 flex-shrink-0'/>
+                                <div className="min-w-0 flex-1">
+                                    <h3 className="font-medium text-sm truncate">{receipt.fileName}</h3>
+                                    <p className="text-xs text-gray-500">{new Date(receipt.uploadedAt).toLocaleDateString()}</p>
+                                </div>
+                            </div>
+                            <ChevronRight className='h-4 w-4 text-gray-400 flex-shrink-0' />
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <span className="text-xs text-gray-500">{(receipt.size / 1024).toFixed(2)} KB</span>
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${receipt.status === "completed" ? "bg-green-100 text-green-800" : receipt.status === "processing" ? "bg-yellow-100 text-yellow-800" : "bg-red-100 text-red-800"}`}>
+                                {(receipt.status?.charAt(0)?.toLocaleUpperCase() ?? "") + (receipt.status?.slice(1) ?? "")}
+                            </span>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Desktop view - Table */}
+            <div className="hidden sm:block">
+                <Table>
+                    <TableCaption>Your uploaded receipts</TableCaption>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead className='w-[40px]'></TableHead>
+                            <TableHead>File Name</TableHead>
+                            <TableHead>Date</TableHead>
+                            <TableHead>Size</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead className='w-[40px]'></TableHead>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                    </TableHeader>
+                    <TableBody>
+                        {reciepts.map((receipt) => (
+                            <TableRow key={receipt._id} className='hover:bg-gray-50 transition-colors cursor-pointer' onClick={()=> router.push(`/reciepts/${receipt._id}`)}>
+                                <TableCell> <FileTextIcon className='h-6 w-6 text-red-500'/></TableCell>
+                                <TableCell className='font-medium'>{receipt.fileName}</TableCell>
+                                <TableCell>{new Date(receipt.uploadedAt).toLocaleDateString()}</TableCell>
+                                <TableCell>{(receipt.size / 1024).toFixed(2)} KB</TableCell>    
+                                <TableCell>
+                                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${receipt.status === "completed" ? "bg-green-100 text-green-800" : receipt.status === "processing" ? "bg-yellow-100 text-yellow-800" : "bg-red-100 text-red-800"}`}>
+                                        {(receipt.status?.charAt(0)?.toLocaleUpperCase() ?? "") + (receipt.status?.slice(1) ?? "")}
+                                    </span>
+                                </TableCell>
+                                <TableCell>
+                                    <ChevronRight className='h-5 w-5 text-gray-400 mx-auto' />
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
         </div>
     </div>
   )

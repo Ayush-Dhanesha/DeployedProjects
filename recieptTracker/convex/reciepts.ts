@@ -224,16 +224,18 @@ export const checkAiUsageLimit = query({
     // Define limits per plan
     const limits = {
       free: {
-        receipt_summary: 3,
-        receipt_scan: 3,
+        receipt_summary: 5,
+        receipt_scan: 5,
+        'ai-insights': 5,
       },
       premium: {
         receipt_summary: -1, // unlimited
         receipt_scan: -1, // unlimited
+        'ai-insights': -1, // unlimited
       }
     };
 
-    const limit = limits[planType as keyof typeof limits]?.[args.feature as keyof typeof limits.free] || 0;
+    const limit = limits[planType as keyof typeof limits]?.[args.feature as keyof typeof limits.free] || (planType === "free" ? 5 : 0);
     const hasAccess = planType === "premium" || currentUsage < limit;
     const remaining = planType === "premium" ? -1 : Math.max(0, limit - currentUsage);
 
